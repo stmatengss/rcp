@@ -1,0 +1,29 @@
+
+       struct ibv_ah *ibv_create_ah(struct ibv_pd *pd,
+                                    struct ibv_ah_attr *attr);
+
+       int ibv_destroy_ah(struct ibv_ah *ah);
+
+DESCRIPTION
+       ibv_create_ah()  creates  an  address  handle (AH) associated with the protection domain pd.  The
+       argument attr is an ibv_ah_attr struct, as defined in <infiniband/verbs.h>.
+
+       struct ibv_ah_attr {
+               struct ibv_global_route grh;            /* Global Routing Header (GRH) attributes */
+               uint16_t                dlid;           /* Destination LID */
+               uint8_t                 sl;             /* Service Level */
+               uint8_t                 src_path_bits;  /* Source path bits */
+               uint8_t                 static_rate;    /* Maximum static rate */
+               uint8_t                 is_global;      /* GRH attributes are valid */
+               uint8_t                 port_num;       /* Physical port number */
+       };
+
+       struct ibv_global_route {
+               union ibv_gid           dgid;           /* Destination GID or MGID */
+               uint32_t                flow_label;     /* Flow label */
+               uint8_t                 sgid_index;     /* Source GID index */
+               uint8_t                 hop_limit;      /* Hop limit */
+               uint8_t                 traffic_class;  /* Traffic class */
+       };
+
+

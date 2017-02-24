@@ -1,0 +1,77 @@
+
+       struct ibv_qp_attr {
+               enum ibv_qp_state       qp_state;            /* Current QP state */
+               enum ibv_qp_state       cur_qp_state;        /* Current QP state - irrelevant for ibv_query_qp */
+               enum ibv_mtu            path_mtu;            /* Path MTU (valid only for RC/UC QPs) */
+               enum ibv_mig_state      path_mig_state;      /* Path migration state (valid if HCA supports APM) */
+               uint32_t                qkey;                /* Q_Key of the QP (valid only for UD QPs) */
+               uint32_t                rq_psn;              /* PSN for receive queue (valid only for RC/UC QPs) */
+               uint32_t                sq_psn;              /* PSN for send queue (valid only for RC/UC QPs) */
+               uint32_t                dest_qp_num;         /* Destination QP number (valid only for RC/UC QPs) */
+               int                     qp_access_flags;     /* Mask of enabled remote access operations (valid only for RC/UC QPs) */
+               struct ibv_qp_cap       cap;                 /* QP capabilities */
+               struct ibv_ah_attr      ah_attr;             /* Primary path address vector (valid only for RC/UC QPs) */
+               struct ibv_ah_attr      alt_ah_attr;         /* Alternate path address vector (valid only for RC/UC QPs) */
+               uint16_t                pkey_index;          /* Primary P_Key index */
+               uint16_t                alt_pkey_index;      /* Alternate P_Key index */
+               uint8_t                 en_sqd_async_notify; /* Enable SQD.drained async notification - irrelevant for ibv_query_qp */
+               uint8_t                 sq_draining;         /* Is the QP draining? (Valid only if qp_state is SQD) */
+               uint8_t                 max_rd_atomic;       /* Number of outstanding RDMA reads & atomic operations on the destination QP (valid only for RC QPs) */
+               uint8_t                 max_dest_rd_atomic;  /* Number of responder resources for handling incoming RDMA reads & atomic operations (valid only for RC QPs) */
+               uint8_t                 min_rnr_timer;       /* Minimum RNR NAK timer (valid only for RC QPs) */
+               uint8_t                 port_num;            /* Primary port number */
+               uint8_t                 timeout;             /* Local ack timeout for primary path (valid only for RC QPs) */
+               uint8_t                 retry_cnt;           /* Retry count (valid only for RC QPs) */
+               uint8_t                 rnr_retry;           /* RNR retry (valid only for RC QPs) */
+               uint8_t                 alt_port_num;        /* Alternate port number */
+               uint8_t                 alt_timeout;         /* Local ack timeout for alternate path (valid only for RC QPs) */
+       };
+
+       struct ibv_ah *ibv_create_ah(struct ibv_pd *pd,
+                                    struct ibv_ah_attr *attr);
+
+       int ibv_destroy_ah(struct ibv_ah *ah);
+
+DESCRIPTION
+       ibv_create_ah()  creates  an  address  handle (AH) associated with the protection domain pd.  The
+       argument attr is an ibv_ah_attr struct, as defined in <infiniband/verbs.h>.
+
+       struct ibv_ah_attr {
+               struct ibv_global_route grh;            /* Global Routing Header (GRH) attributes */
+               uint16_t                dlid;           /* Destination LID */
+               uint8_t                 sl;             /* Service Level */
+               uint8_t                 src_path_bits;  /* Source path bits */
+               uint8_t                 static_rate;    /* Maximum static rate */
+               uint8_t                 is_global;      /* GRH attributes are valid */
+               uint8_t                 port_num;       /* Physical port number */
+       };
+
+       struct ibv_global_route {
+               union ibv_gid           dgid;           /* Destination GID or MGID */
+               uint32_t                flow_label;     /* Flow label */
+               uint8_t                 sgid_index;     /* Source GID index */
+               uint8_t                 hop_limit;      /* Hop limit */
+               uint8_t                 traffic_class;  /* Traffic class */
+       };
+
+
+       qp_init_attr is an ibv_qp_init_attr struct, as defined in <infiniband/verbs.h>.
+
+       struct ibv_qp_init_attr {
+               void                   *qp_context;     /* Associated context of the QP */
+               struct ibv_cq          *send_cq;        /* CQ to be associated with the Send Queue (SQ) */
+               struct ibv_cq          *recv_cq;        /* CQ to be associated with the Receive Queue (RQ) */
+               struct ibv_srq         *srq;            /* SRQ handle if QP is to be associated with an SRQ, otherwise NULL */
+               struct ibv_qp_cap       cap;            /* QP capabilities */
+               enum ibv_qp_type        qp_type;        /* QP Transport Service Type: IBV_QPT_RC, IBV_QPT_UC, IBV_QPT_UD or IBV_QPT_RAW_PACKET */
+               int                     sq_sig_all;     /* If set, each Work Request (WR) submitted to the SQ generates a completion entry */
+       };
+
+       struct ibv_qp_cap {
+               uint32_t                max_send_wr;    /* Requested max number of outstanding WRs in the SQ */
+               uint32_t                max_recv_wr;    /* Requested max number of outstanding WRs in the RQ */
+               uint32_t                max_send_sge;   /* Requested max number of scatter/gather (s/g) elements in a WR in the SQ */
+               uint32_t                max_recv_sge;   /* Requested max number of s/g elements in a WR in the SQ */
+               uint32_t                max_inline_data;/* Requested max number of data (bytes) that can be posted inline to the SQ, otherwise 0 */
+       };
+
