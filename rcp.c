@@ -148,6 +148,14 @@ void m_qp_attr_init(struct ibv_qp_init_attr *m_init_attr) {
 }
 
 void m_run_server() {
+		
+		int fd = open(m_file_name, O_RDONLY, 0644);
+		if (fd < 0) {
+				printf("open failed! exit!\n");
+				exit(-1);
+		}
+
+		read(fd, m_send_msg, MESSAGE_LEN);
 
 		struct m_ctl_block* m_ctl_block = (struct m_ctl_block*)malloc(sizeof(struct m_ctl_block));
 
@@ -157,7 +165,7 @@ void m_run_server() {
 		struct ibv_qp_attr m_attr;
 		struct ibv_wc m_wc;
 
-		m_fill_string(m_send_msg);
+//		m_fill_string(m_send_msg);
 
 		m_addrinfo_init(&m_hint);
 //		memset(&m_hint, 0, sizeof m_hint);
