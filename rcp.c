@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <fcntl.h>
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
@@ -13,6 +14,8 @@
 #include <netdb.h>
 #include <unistd.h>
 #include <netdb.h>
+#include <getopt.h>
+
 #include <rdma/rdma_cma.h>
 #include <rdma/rdma_verbs.h>
 #include <rdma/rsocket.h>
@@ -21,6 +24,7 @@
 char* m_port = "7471";
 char* m_server_ip = "127.0.0.1";
 int m_ret = 0;
+char* m_file_name = "file";
 
 #define CPE(ret) if(ret) {\
 		printf("error code: %d, %s\n", ret, gai_strerror(ret));\
@@ -120,11 +124,15 @@ void test() {
 void m_addrinfo_init(struct rdma_addrinfo *m_hint) {
 		PRINT_FUNC
 		FILL_P(m_hint);
-		m_hint->ai_port_space = RDMA_PS_TCP;
+		m_hint->ai_port_space = RDMA_PS_IB;
+//		m_hint->ai_port_space = RDMA_PS_TCP;
+		m_hint->ai_qp_type = IBV_QPT_UC;
 		if(m_is_server) {
 				m_hint->ai_flags = RAI_PASSIVE;
+//				m_hint->ai_flags = RAI_NUMERICHOST;
 		} else {
-				m_hint->ai_flags = RAI_NUMERICHOST;
+//				m_hint->ai_flags = RAI_NUMERICHOST;
+				m_hint->ai_flags = AI_NUMERICHOST;
 		}	
 }
 
@@ -135,6 +143,8 @@ void m_qp_attr_init(struct ibv_qp_init_attr *m_init_attr) {
 		m_init_attr->cap.max_send_sge = m_init_attr->cap.max_send_sge = 1;
 		m_init_attr->cap.max_inline_data = MESSAGE_LEN;
 		m_init_attr->sq_sig_all = 1;
+//		m_init_attr->qp_type = IBV_QPT_RC;
+		m_init_attr->qp_type = IBV_QPT_UC;
 }
 
 void m_run_server() {
@@ -233,13 +243,36 @@ int main(int argc, char** argv) {
 #ifdef DEBUG
 		test();
 #endif
-		if (argc == 1) {
-				m_is_server = 1;
+		int op;
+
+		while((op = getopt(argc, argv, "sci:p:f:")) != -1) {
+				switch (op) {
+						case 'f':
+								m_file_name = optarg;
+								break;
+						case 's':
+								m_is_server = 1;
+								break;
+						case 'c':
+								m_is_server = 0;
+								break;
+						case 'i':
+								m_server_ip = optarg;
+								break;
+						case 'p':
+								m_port = optarg;
+								break;
+						default:
+								printf("usage: ./rcp [-s/c] [-i ip_addr] [-p port]");
+								exit(1);
+				}
+		}
+
+		if (m_is_server) {
 				printf("Server start:\n");
 				m_run_server();
 				printf("Server end:\n");
 		} else {
-				m_server_ip = argv[1];
 				printf("Client start:\n");
 				m_run_client();
 				printf("Client end:\n");
