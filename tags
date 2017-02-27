@@ -1,0 +1,61 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+BACK_LOG	rcp.c	49;"	d	file:
+CPE	rcp.c	29;"	d	file:
+CPNE	rcp.c	34;"	d	file:
+FILL	rcp.c	39;"	d	file:
+FILL_P	rcp.c	40;"	d	file:
+ITER_NUM	rcp.c	51;"	d	file:
+MAX_WR_NUM	rcp.c	52;"	d	file:
+MESSAGE_LEN	rcp.c	50;"	d	file:
+PRINT_FUNC	rcp.c	45;"	d	file:
+PRINT_LINE	rcp.c	41;"	d	file:
+buf_rkey	rcp.c	/^		uint32_t	buf_rkey;$/;"	m	struct:m_conn_block	file:
+buf_va	rcp.c	/^		uint64_t	buf_va;$/;"	m	struct:m_conn_block	file:
+cq	rcp.c	/^		struct ibv_cq *cq;$/;"	m	struct:m_ctl_block	typeref:struct:m_ctl_block::ibv_cq	file:
+file_size	rcp.c	/^		long file_size;$/;"	m	struct:m_conn_block	file:
+id	rcp.c	/^		struct rdma_addrinfo *res, *id;$/;"	m	struct:m_ctl_block	typeref:struct:m_ctl_block::	file:
+id	test.c	/^struct rdma_cm_id *listen_id, *id;$/;"	v	typeref:struct:
+lis_id	rcp.c	/^		struct rdma_cm_id *lis_id;$/;"	m	struct:m_ctl_block	typeref:struct:m_ctl_block::rdma_cm_id	file:
+listen_id	test.c	/^struct rdma_cm_id *listen_id, *id;$/;"	v	typeref:struct:rdma_cm_id
+m_addrinfo_init	rcp.c	/^void m_addrinfo_init(struct rdma_addrinfo *m_hint) {$/;"	f
+m_cm_ch	rcp.c	/^		struct rdma_event_channel *m_cm_ch;$/;"	m	struct:m_ctl_block	typeref:struct:m_ctl_block::rdma_event_channel	file:
+m_cm_event	rcp.c	/^		struct rdma_cm_event *m_cm_event; $/;"	m	struct:m_ctl_block	typeref:struct:m_ctl_block::rdma_cm_event	file:
+m_conn_block	rcp.c	/^struct m_conn_block {$/;"	s	file:
+m_conn_param	rcp.c	/^		struct rdma_conn_param *m_conn_param;$/;"	m	struct:m_ctl_block	typeref:struct:m_ctl_block::rdma_conn_param	file:
+m_ctl_block	rcp.c	/^struct m_ctl_block {$/;"	s	file:
+m_file_name	rcp.c	/^char* m_file_name = "file";$/;"	v
+m_file_size	rcp.c	/^long m_file_size(FILE *m_fd) {$/;"	f
+m_file_whole	rcp.c	/^char *m_file_whole;$/;"	v
+m_fill_string	rcp.c	/^void m_fill_string(char *str) {$/;"	f
+m_get_device_info	rcp.c	/^void m_get_device_info() {$/;"	f
+m_get_qp_info	rcp.c	/^void m_get_qp_info(struct ibv_qp *m_qp) {$/;"	f
+m_id	rcp.c	/^		struct rdma_cm_id* m_id;$/;"	m	struct:m_ctl_block	typeref:struct:m_ctl_block::rdma_cm_id	file:
+m_is_server	rcp.c	/^int m_is_server = 0;$/;"	v
+m_port	rcp.c	/^char* m_port = "7471";$/;"	v
+m_qp_attr_init	rcp.c	/^void m_qp_attr_init(struct ibv_qp_init_attr *m_init_attr) {$/;"	f
+m_recv_msg	rcp.c	/^char m_recv_msg[MESSAGE_LEN];$/;"	v
+m_ret	rcp.c	/^int m_ret = 0;$/;"	v
+m_run_client	rcp.c	/^void m_run_client() {$/;"	f
+m_run_server	rcp.c	/^void m_run_server() {$/;"	f
+m_send_msg	rcp.c	/^char m_send_msg[MESSAGE_LEN] = "Hello World\\n";$/;"	v
+m_server_ip	rcp.c	/^char* m_server_ip = "127.0.0.1";$/;"	v
+main	rcp.c	/^int main(int argc, char** argv) {$/;"	f
+main	test.c	/^int main() {$/;"	f
+main	test_file_size.c	/^int main(int argc, char **argv) {$/;"	f
+mr	test.c	/^struct ibv_mr *mr, *send_mr;$/;"	v	typeref:struct:ibv_mr
+port	test.c	/^static char *port = "7471";$/;"	v	file:
+qp	rcp.c	/^	   	struct ibv_qp *qp;$/;"	m	struct:m_ctl_block	typeref:struct:m_ctl_block::ibv_qp	file:
+recv_mr	rcp.c	/^		struct ibv_mr *send_mr, *recv_mr;$/;"	m	struct:m_ctl_block	typeref:struct:m_ctl_block::	file:
+recv_msg	test.c	/^uint8_t recv_msg[16];$/;"	v
+res	rcp.c	/^		struct rdma_addrinfo *res, *id;$/;"	m	struct:m_ctl_block	typeref:struct:m_ctl_block::rdma_addrinfo	file:
+run	test.c	/^static int run(void)$/;"	f	file:
+send_flags	test.c	/^int send_flags;$/;"	v
+send_mr	rcp.c	/^		struct ibv_mr *send_mr, *recv_mr;$/;"	m	struct:m_ctl_block	typeref:struct:m_ctl_block::ibv_mr	file:
+send_mr	test.c	/^struct ibv_mr *mr, *send_mr;$/;"	v	typeref:struct:
+send_msg	test.c	/^uint8_t send_msg[16];$/;"	v
+test	rcp.c	/^void test() {$/;"	f
